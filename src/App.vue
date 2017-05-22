@@ -1,17 +1,38 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <nested :data="book"></nested>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
+import Nested from './components/Nested'
 
 export default {
   name: 'app',
   components: {
-    Hello
+    Nested
+  },
+  created () {
+    this.book = {
+      id: 'parent',
+      title: 'parent',
+      children: [
+        {
+          id: 'child1',
+          title: '1. child'
+        },
+        {
+          id: 'child2',
+          title: '2. child',
+          children: [
+            {
+              id: 'child21',
+              title: '2.1. grandchild'
+            }
+          ]
+        }
+      ]
+    }
   }
 }
 </script>
@@ -21,7 +42,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
