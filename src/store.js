@@ -34,6 +34,18 @@ function findNode (id, currentNode) {
   }
 }
 
+function updateChildStatuses (id, currentNode, newStatus) {
+  currentNode.status = newStatus
+  if (!currentNode.children) return
+  for (let i = 0; i < currentNode.children.length; i += 1) {
+    let currentChild = currentNode.children[i]
+    // Search in the current child
+    let result = updateChildStatuses(id, currentChild, newStatus)
+    // Return the result if the node has been found
+    if (result) result.status = newStatus
+  }
+}
+
 export default new Vuex.Store({
   state: {
     statuses: []
@@ -44,9 +56,8 @@ export default new Vuex.Store({
     },
     updateStatus (state, component) {
       var result = findNode(component.id, state.statuses)
-      if (result) {
-        result.status = component.status
-      }
+      if (!result) return
+      updateChildStatuses(component.id, result, component.status)
     }
   },
   getters: {
