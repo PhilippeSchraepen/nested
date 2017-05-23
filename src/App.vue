@@ -16,23 +16,28 @@ export default {
     this.book = {
       id: 'parent',
       title: 'parent',
+      status: 'unchecked',
       children: [
         {
           id: 'child1',
-          title: '1. child'
+          title: '1. child',
+          status: 'unchecked'
         },
         {
           id: 'child2',
           title: '2. child',
+          status: 'unchecked',
           children: [
             {
               id: 'child21',
-              title: '2.1. grandchild'
+              title: '2.1. grandchild',
+              status: 'unchecked'
             }
           ]
         }
       ]
     }
+    this.$store.commit('populateState', this.book)
   }
 }
 </script>
