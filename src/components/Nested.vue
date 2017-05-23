@@ -20,59 +20,30 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex)
 
 const statuses = {
   checked: 'checked',
-  unchecked: 'unchecked'
+  unchecked: 'unchecked',
+  undetermined: 'undetermined'
 }
-
-const store = new Vuex.Store({
-  state: {
-    statuses: []
-  },
-  mutations: {
-    updateStatus (state, component) {
-      let existingComponent = state.statuses.find(status => status.id === component.id)
-      if (existingComponent) {
-        existingComponent.status = component.status
-        return
-      }
-      state.statuses.push(component)
-    }
-  },
-  getters: {
-    getComponentStatus: state => componentId => {
-      let component = state.statuses.find(component => component.id === componentId)
-      if (component && component.status) {
-        return component.status
-      }
-      return statuses.unchecked
-    }
-  }
-})
 
 export default {
   name: 'nested',
   props: ['data'],
-  store,
   methods: {
     clickCheckbox: function () {
-      if (store.getters.getComponentStatus(this.data.id) === statuses.unchecked) {
-        store.commit('updateStatus', {id: this.data.id, status: statuses.checked})
+      if (this.$store.getters.getComponentStatus(this.data.id) === statuses.unchecked) {
+        this.$store.commit('updateStatus', {id: this.data.id, status: statuses.checked})
       } else {
-        store.commit('updateStatus', {id: this.data.id, status: statuses.unchecked})
+        this.$store.commit('updateStatus', {id: this.data.id, status: statuses.unchecked})
       }
     }
   },
   computed: {
     getStatus () {
-      return store.getters.getComponentStatus(this.data.id)
+      return this.$store.getters.getComponentStatus(this.data.id)
     }
   }
-
 }
 </script>
 
