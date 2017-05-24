@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>This is a qubit list</h1>
+    <h1>The qubit-list</h1>
     <qubit :data="book"></qubit>
   </div>
 </template>
@@ -16,32 +16,32 @@ export default {
   created () {
     this.book = {
       id: 'parent',
-      title: 'parent',
+      title: 'Trunk',
       status: 'unchecked',
       children: [
         {
           id: 'child1',
-          title: '1. child',
+          title: '1. First branch',
           status: 'unchecked'
         },
         {
           id: 'child2',
-          title: '2. child',
+          title: '2. Second branch',
           status: 'unchecked',
           children: [
             {
               id: 'child21',
-              title: '2.1. grandchild',
+              title: '2.1. Sub-branch',
               status: 'unchecked',
               children: [
                 {
                   id: 'child211',
-                  title: '2.1.1 greatgrandchild',
+                  title: '2.1.1. First leaf',
                   status: 'unchecked'
                 },
                 {
                   id: 'child212',
-                  title: '2.1.2 greatgrandchild',
+                  title: '2.1.2. Second leaf',
                   status: 'unchecked'
                 }
               ]
@@ -65,6 +65,7 @@ export default {
   width: 500px;
   background: lightgray;
   padding: 20px;
+
   h1 {
     margin-top: 0;
   }

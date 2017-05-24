@@ -2,9 +2,12 @@
   <div class="qubit">
     <div
     @click.stop='clickCheckbox'
-    :class="'qubit__checkbox--' + getStatus"
-    class="qubit__checkbox"></div>
-    <div class="qubit__title">{{data.title}}</div>
+    class="qubit__clickarea">
+      <div
+      :class="'qubit__checkbox--' + getStatus"
+      class="qubit__checkbox"></div>
+      <div class="qubit__title">{{data.title}}</div>
+    </div>
     <div class="qubit__child">
       <qubit
       class="qubit__child__list"
@@ -48,6 +51,11 @@ export default {
 .qubit {
   padding-top: 20px;
 
+  &__clickarea {
+    display: inline;
+    cursor: pointer;
+  }
+
   &__title {
     display: inline-block;
     vertical-align: middle;
@@ -58,7 +66,6 @@ export default {
     vertical-align: middle;
     width: 25px;
     height: 25px;
-    cursor: pointer;
     &--checked {
       background-image: url('../assets/checkbox-checked.svg');
     }
