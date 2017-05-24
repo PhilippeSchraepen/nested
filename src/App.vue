@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <nested :data="book"></nested>
+    <h1>This is a qubit list</h1>
+    <qubit :data="book"></qubit>
   </div>
 </template>
 
 <script>
-import Nested from './components/Nested'
+import qubit from './components/qubit'
 
 export default {
   name: 'app',
   components: {
-    Nested
+    qubit
   },
   created () {
     this.book = {
@@ -54,11 +55,18 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  margin: 0 auto;
+  width: 500px;
+  background: lightgray;
+  padding: 20px;
+  h1 {
+    margin-top: 0;
+  }
 }
 </style>

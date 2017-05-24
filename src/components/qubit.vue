@@ -1,20 +1,17 @@
 <template>
-  <div class="nested">
+  <div class="qubit">
     <div
     @click.stop='clickCheckbox'
-    :class="'nested__checkbox--' + getStatus"
-    class="nested__checkbox"></div>
-    <div class="nested__content">
-      <div class="nested__title">Title: {{data.title}}</div>
-      <div class="nested__id">ID: {{data.id}}</div>
-      <div class="nested__child">
-        <nested
-        class="nested__child__list"
-        v-for='child in data.children'
-        :data='child'
-        :key='child'>
-        </nested>
-      </div>
+    :class="'qubit__checkbox--' + getStatus"
+    class="qubit__checkbox"></div>
+    <div class="qubit__title">{{data.title}}</div>
+    <div class="qubit__child">
+      <qubit
+      class="qubit__child__list"
+      v-for='child in data.children'
+      :data='child'
+      :key='child'>
+    </qubit>
     </div>
   </div>
 </template>
@@ -28,7 +25,7 @@ const statuses = {
 }
 
 export default {
-  name: 'nested',
+  name: 'qubit',
   props: ['data'],
   methods: {
     clickCheckbox: function () {
@@ -48,15 +45,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nested {
-  background: lightgray;
-  padding: 20px;
+.qubit {
+  padding-top: 20px;
 
-  &__child__list {
-    padding-left: 20px;
+  &__title {
+    display: inline-block;
+    vertical-align: middle;
   }
 
   &__checkbox {
+    display: inline-block;
+    vertical-align: middle;
     width: 25px;
     height: 25px;
     cursor: pointer;
@@ -69,6 +68,10 @@ export default {
     &--unchecked {
       background-image: url('../assets/checkbox-unchecked.svg');
     }
+  }
+
+  &__child {
+    padding-left: 50px;
   }
 }
 
