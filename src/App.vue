@@ -31,7 +31,19 @@ export default {
             {
               id: 'child21',
               title: '2.1. grandchild',
-              status: 'unchecked'
+              status: 'unchecked',
+              children: [
+                {
+                  id: 'child211',
+                  title: '2.1.1 greatgrandchild',
+                  status: 'unchecked'
+                },
+                {
+                  id: 'child212',
+                  title: '2.1.2 greatgrandchild',
+                  status: 'unchecked'
+                }
+              ]
             }
           ]
         }

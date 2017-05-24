@@ -9,10 +9,6 @@ const statuses = {
 }
 
 function findNode (id, currentNode) {
-  let i
-  let currentChild
-  let result
-
   if (id === currentNode.id) {
     return currentNode
   } else if (!currentNode.children) {
@@ -20,10 +16,11 @@ function findNode (id, currentNode) {
   } else {
     // Use a for loop instead of forEach to avoid nested functions
     // Otherwise "return" will not work properly
-    for (i = 0; i < currentNode.children.length; i += 1) {
-      currentChild = currentNode.children[i]
+    for (let i = 0; i < currentNode.children.length; i += 1) {
+      let currentChild = currentNode.children[i]
+      currentChild.parentId = currentNode.id
       // Search in the current child
-      result = findNode(id, currentChild)
+      let result = findNode(id, currentChild)
       // Return the result if the node has been found
       if (result !== false) {
         return result
@@ -34,35 +31,47 @@ function findNode (id, currentNode) {
   }
 }
 
-function updateChildStatuses (id, currentNode, newStatus) {
-  currentNode.status = newStatus
+function updateChildStatuses (currentNode) {
   if (!currentNode.children) return
   for (let i = 0; i < currentNode.children.length; i += 1) {
     let currentChild = currentNode.children[i]
-    // Search in the current child
-    let result = updateChildStatuses(id, currentChild, newStatus)
-    // Return the result if the node has been found
-    if (result) result.status = newStatus
+    currentChild.status = currentNode.status
+    updateChildStatuses(currentChild)
   }
+}
+
+function updateParentStatuses (currentNode, tree) {
+  if (!currentNode.parentId) return
+  let parentNode = findNode(currentNode.parentId, tree)
+  if (parentNode.children.every(child => child.status === statuses.checked)) {
+    parentNode.status = statuses.checked
+  } else if (parentNode.children.every(child => child.status === statuses.unchecked)) {
+    parentNode.status = statuses.unchecked
+  } else {
+    parentNode.status = statuses.undetermined
+  }
+  updateParentStatuses(parentNode, tree)
 }
 
 export default new Vuex.Store({
   state: {
-    statuses: []
+    tree: []
   },
   mutations: {
     populateState (state, data) {
-      state.statuses = data
+      state.tree = data
     },
     updateStatus (state, component) {
-      var result = findNode(component.id, state.statuses)
+      var result = findNode(component.id, state.tree)
       if (!result) return
-      updateChildStatuses(component.id, result, component.status)
+      result.status = component.status
+      updateChildStatuses(result)
+      updateParentStatuses(result, state.tree)
     }
   },
   getters: {
     getComponentStatus: state => componentId => {
-      let result = findNode(componentId, state.statuses)
+      let result = findNode(componentId, state.tree)
       if (result && result.status) {
         return result.status
       }
