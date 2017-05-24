@@ -57,17 +57,17 @@ export default {
   }
 
   &__checkbox {
-    width: 10px;
-    height: 10px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
     &--checked {
-      background: green;
+      background-image: url('../assets/checkbox-checked.svg');
     }
     &--undetermined {
-      background: yellow;
+      background-image: url('../assets/checkbox-undetermined.svg');
     }
     &--unchecked {
-      background: red;
+      background-image: url('../assets/checkbox-unchecked.svg');
     }
   }
 }
