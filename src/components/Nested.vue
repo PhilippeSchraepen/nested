@@ -34,9 +34,9 @@ export default {
     clickCheckbox: function () {
       if (this.$store.getters.getComponentStatus(this.data.id) === statuses.unchecked) {
         this.$store.commit('updateStatus', {id: this.data.id, status: statuses.checked})
-      } else {
-        this.$store.commit('updateStatus', {id: this.data.id, status: statuses.unchecked})
+        return
       }
+      this.$store.commit('updateStatus', {id: this.data.id, status: statuses.unchecked})
     }
   },
   computed: {
@@ -63,7 +63,7 @@ export default {
     &--checked {
       background: green;
     }
-    &--indetermined {
+    &--undetermined {
       background: yellow;
     }
     &--unchecked {
